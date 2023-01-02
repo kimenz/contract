@@ -11,7 +11,7 @@
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/contract",
     "license": "AGPL-3",
-    "depends": ["mail"],
+    "depends": ["mail", "portal"],
     "data": [
         "security/ir.model.access.csv",
         "security/agreement_security.xml",
