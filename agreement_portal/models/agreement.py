@@ -9,4 +9,4 @@ class AgreementModel(models.Model):
 
     def _compute_access_url(self):
         for record in self:
-            record.access_url = "/my/agreements/{}".format(record.id)
+            record.access_url = f"/my/agreements/{record.id}"

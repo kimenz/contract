@@ -13,7 +13,7 @@
             >
                 <a
                     t-if="agreement"
-                    t-attf-href="/my/agreement?{{ keep_query() }}"
+                    t-attf-href="/my/agreements?{{ keep_query() }}"
                 >Agreements</a>
                 <t t-else="">Agreements</t>
             </li>
