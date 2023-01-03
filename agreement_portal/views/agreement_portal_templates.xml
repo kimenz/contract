@@ -47,7 +47,7 @@
                     <tr class="active">
                         <th>Agreement #</th>
                         <th class='d-none d-md-table-cell'>Reference</th>
-                        <th class='d-none d-md-table-cell'>Date</th>
+                        <th class='d-none d-md-table-cell'>Date Start</th>
                         <th class='d-none d-md-table-cell'>Date end</th>
                     </tr>
                 </thead>
@@ -97,10 +97,6 @@
                     </h5>
                 </t>
                 <t t-set="card_body">
-                    <!-- <div class="mb-1" t-if="user in task.sudo().project_id.allowed_user_ids">
-                        <strong>Project:</strong> <a t-attf-href="/my/project/#{task.project_id.id}" t-field="task.project_id.name"/>
-                    </div> -->
-
                     <div class="row mb-4">
                         <div class="col-12 col-md-6 mb-1">
                             <strong>Date:</strong> <span
@@ -153,7 +149,6 @@
                         class="row"
                         t-if="agreement.description or agreement.attachment_ids"
                     >
-                        <!-- <div t-if="agreement.description" t-attf-class="col-12 col-lg-7 mb-4 mb-md-0 col-lg-12 }}"> -->
                         <div
                             t-if="agreement.description"
                             t-attf-class="col-12 col-lg-7 mb-4 mb-md-0 {{'col-lg-7' if equipment_ids else 'col-lg-12'}}"
