@@ -3,14 +3,16 @@
 {
     "name": "Agreement Portal",
     "summary": "Show a portal for Agreement",
-    "version": "14.0.1.0.1",
+    "version": "14.0.1.0.2",
     "license": "AGPL-3",
-    "website": "https://github.com/OCA/field-service",
+    "website": "https://github.com/OCA/contract",
     "category": "Agreement",
     "author": "Odoo Community Association (OCA), Rafnixg",
     "depends": ["base", "portal", "website", "agreement"],
     "data": [
-        "views/agreement_portal_templates.xml"
+        "security/ir.model.access.csv",
+        "security/agreement_security.xml",
+        "views/agreement_portal_templates.xml",
     ],
     "demo": [],
 }

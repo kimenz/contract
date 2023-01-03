@@ -12,13 +12,13 @@ class PortalAgreement(CustomerPortal):
     def _prepare_home_portal_values(self, counters):
         values = super()._prepare_home_portal_values(counters)
         if "agreement_count" in counters:
+            agreement_count = 0
             agreement_model = request.env["agreement"]
-            partner_id = request.env.user.partner_id.parent_id
-            agreement_count = (
-                agreement_model.search_count([])
-                if agreement_model.check_access_rights("read", raise_exception=False)
-                else 0
-            )
+            partner_id = request.env.user.partner_id
+            if partner_id.parent_id:
+                partner_id = partner_id.parent_id
+            if agreement_model.check_access_rights("read", raise_exception=False):
+                agreement_count = partner_id.agreements_count
             values["agreement_count"] = agreement_count
         return values
 
@@ -30,7 +30,7 @@ class PortalAgreement(CustomerPortal):
         values = {
             "page_name": "Agreements",
             "agreement": agreement,
-            "equipment_ids": equipment_ids
+            "equipment_ids": equipment_ids,
         }
         return self._get_page_view_values(
             agreement, access_token, values, "my_agreements_history", False, **kwargs
@@ -64,7 +64,12 @@ class PortalAgreement(CustomerPortal):
             sortby = "name"
         order = searchbar_sortings[sortby]["order"]
         # count for pager
-        agreement_count = agreement_obj.search_count(domain)
+        partner_id = request.env.user.partner_id
+        if partner_id.parent_id:
+            domain.append(["partner_id", "=", partner_id.parent_id.id])
+            agreement_count = agreement_obj.sudo().search_count(domain)
+        else:
+            agreement_count = agreement_obj.search_count(domain)
         # pager
         pager = portal_pager(
             url="/my/agreements",
@@ -78,9 +83,14 @@ class PortalAgreement(CustomerPortal):
             step=self._items_per_page,
         )
         # content according to pager and archive selected
-        agreements = agreement_obj.search(
-            domain, order=order, limit=self._items_per_page, offset=pager["offset"]
-        )
+        if partner_id.parent_id:
+            agreements = agreement_obj.sudo().search(
+                domain, order=order, limit=self._items_per_page, offset=pager["offset"]
+            )
+        else:
+            agreements = agreement_obj.search(
+                domain, order=order, limit=self._items_per_page, offset=pager["offset"]
+            )
         request.session["my_agreements_history"] = agreements.ids[:100]
         values.update(
             {
@@ -108,5 +118,7 @@ class PortalAgreement(CustomerPortal):
             )
         except (AccessError, MissingError):
             return request.redirect("/my")
-        values = self._agreement_get_page_view_values(agreement_sudo, access_token, **kw)
+        values = self._agreement_get_page_view_values(
+            agreement_sudo, access_token, **kw
+        )
         return request.render("agreement_portal.portal_agreement_page", values)
