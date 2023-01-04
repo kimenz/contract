@@ -194,6 +194,25 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row" t-if="agreement.fsm_location_id">
+                        <div t-attf-class="col-12 col-lg-7 mb-4 mb-md-0 col-lg-12">
+                            <hr class="mb-1" />
+                            <div class="d-flex my-2">
+                                <strong>Locations</strong>
+                            </div>
+                            <div class="py-1 px-2 bg-100 small">
+                                <a
+                                    t-att-href="agreement.fsm_location_id.get_portal_url()"
+                                    t-att-title="agreement.fsm_location_id.name"
+                                >
+                                    <t t-esc="agreement.fsm_location_id.name" />
+                                </a>
+                                <p t-field="agreement.fsm_location_id.street" />
+                            </div>
+
+                        </div>
+
+                    </div>
                 </t>
             </t>
         </t>
