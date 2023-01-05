@@ -8,7 +8,7 @@ from odoo import _, api, fields, models
 class Agreement(models.Model):
     _name = "agreement"
     _description = "Agreement"
-    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _inherit = ["mail.thread", "mail.activity.mixin", "portal.mixin"]
 
     code = fields.Char(required=True, tracking=True)
     name = fields.Char(required=True, tracking=True)
