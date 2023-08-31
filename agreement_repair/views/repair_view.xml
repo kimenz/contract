@@ -10,9 +10,10 @@
                 <page string="Agreement">
                     <group>
                         <group id="agreement-left">
+                            <field name="partner_agreement_id"  />
                             <field
                                 name="agreement_id"
-                                domain="[('partner_id', '=', partner_id)]"
+                                domain="[('partner_id', 'in', [partner_agreement_id]),('is_template', '=', False)]"
                             />
                             <field
                                 name="serviceprofile_id"
